@@ -17,7 +17,7 @@ MARIADB_VER="10.6.17"
 
 function temp_install_build_tools {
     apt update
-    apt install -y build-essential cmake pkg-config git wget bison
+    apt install -y build-essential cmake make pkg-config git wget bison binutils gcc bison 
 }
 
 function pcre2_build {
@@ -25,10 +25,9 @@ function pcre2_build {
     wget "github.com/PCRE2Project/pcre2/releases/download/pcre2-$PCRE2_VER/pcre2-$PCRE2_VER.tar.gz"
     tar -zxf "pcre2-$PCRE2_VER.tar.gz"
     cd "pcre2-$PCRE2_VER"
-    #./configure --prefix="$MAIN_PATH/pcre2-$PCRE2_VER"
-    #make && make install
+    ./configure --prefix="$MAIN_PATH/pcre2-$PCRE2_VER"
+    make && make install
     ls -la
-    #cd ..
 }
 
 function zlib_build() {
@@ -38,7 +37,6 @@ function zlib_build() {
     cd "zlib-$ZLIB_VER"
     ./configure --prefix="$MAIN_PATH/zlib-$ZLIB_VER"
     make && make install
-    cd ..
 }
 
 function openssl_build() {
@@ -48,7 +46,6 @@ function openssl_build() {
     cd "openssl-$OPENSSL_VER"
     ./config --prefix="$MAIN_PATH/openssl-$OPENSSL_VER" --openssldir"=$MAIN_PATH/openssl-$OPENSSL_VER"
     make && make install
-    cd ..
 }
 
 function nginx_build() {
@@ -63,7 +60,6 @@ function nginx_build() {
         --with-openssl="$SRC_PATH/openssl-$OPENSSL_VER" \
         --with-http_ssl_module
     make && make install
-    cd ..
 }
 
 function mariadb_build() {
@@ -71,7 +67,6 @@ function mariadb_build() {
     wget "https://downloads.mariadb.org/f/mariadb-$MARIADB_VER/source/mariadb-$MARIADB_VER.tar.gz"
     tar -xzf "mariadb-$MARIADB_VER.tar.gz"
     cd "mariadb-$MARIADB_VER"
-    cd ..
     #todo
 }
 
